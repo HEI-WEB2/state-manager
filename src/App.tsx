@@ -1,61 +1,39 @@
-import { PropsWithChildren, createContext, useContext, useState } from 'react'
+import z from "zod";
+import {useForm} from "react-hook-form";
 import './App.css'
 
-interface ThemeContextValues {
-  theme: string;
-  toggleTheme: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextValues>({
-  theme: "dark",
-  toggleTheme: () => { }
-});
-
-const ThemeContextProvider = ({children}: PropsWithChildren) => {
-  const [theme, setTheme] = useState('dark');
-
-  return (
-    <ThemeContext.Provider
-      value={{
-        theme,
-        toggleTheme: () => {
-          setTheme(prev => prev === "dark" ? "light" : "dark");
-        },
-      }}
-    >
-      {children}
-    </ThemeContext.Provider>
-  )
-}
-
 const App = () => {
-  return (
-    <div>
-      <ThemeContextProvider>
-        <ThemeValue />
-        <ToggleThemeButton />
-      </ThemeContextProvider>
-    </div>
-  )
-}
+  const {register, handleSubmit} = useForm({
+    defaultValues: {
+      username: "",
+      firstname: "",
+      lastname: "",
+    }
+  })
 
-const ThemeValue = () => {
-  const {theme} = useContext(ThemeContext);
-  return (
-    <h1>
-      header theme {theme}
-    </h1>
-  )
-}
+  const submitData = (data: any) => {
+    console.log('data', data);
+  }
 
-const ToggleThemeButton = () => {
-  const {toggleTheme} = useContext(ThemeContext);
+  // 'handleSubmit' is a middleware that handles validations and stuff
   return (
-    <button onClick={toggleTheme}>
-      toggle theme
-    </button>
+    <form onSubmit={handleSubmit(submitData)}>
+      <div>
+        <input type="text" {...register("username")} />
+      </div>
+
+      <div>
+        <input type="text" {...register("lastname")} />
+      </div>
+
+      <div>
+        <input type="text" {...register("firstname")} />
+      </div>
+
+      <button type="submit">submit</button>
+    </form>
   )
-}
+} 
 
 export default App
 
