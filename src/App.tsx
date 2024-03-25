@@ -1,37 +1,49 @@
-import { useState } from 'react';
+import {useState} from 'react';
+import {useForm, SubmitHandler} from "react-hook-form";
 import './App.css'
 
+interface UserSchema {
+  username: string;
+  age: number;
+}
+
 const App = () => {
-  const [values, setValues] = useState({
-    username: "",
-    age: 17,
+  const {register, handleSubmit} = useForm<UserSchema>({
+    defaultValues: {
+      username: "",
+      age: 17,
+      email: "example@gmail.com"
+    }
   });
 
-  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const {name: field, value} = ev.target;
-    setValues(prev => ({
-      ...prev,
-      [field]: value,
-    }));
+  const onSubmit: SubmitHandler = (data) => {
+    const {username, age} = data;
+    if (
+      username &&
+      username.length > 0 &&
+      username.length < 20 &&
+    ) {
+    }
+
+    if (age && age > 0 && age < 500) {
+    }
   }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <input
-          name="username"
-          value={values.username}
-          onChange={handleChange}
-        />
+        <input {...register("username")} />
       </div>
 
       <div>
-        <input
-          name="age"
-          value={values.age}
-          onChange={handleChange}
-        />
+        <input {...register("age")} />
       </div>
+
+      <div>
+        <input {...register("email")} />
+      </div>
+
+      <button type="submit">submit</button>
     </form>
   );
 } 

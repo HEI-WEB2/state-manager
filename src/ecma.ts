@@ -50,3 +50,26 @@ const obj1 = {
 
 
 
+
+
+
+
+
+function register(name: string) {
+  return {
+    name,
+    type: "text",
+    // onChange
+    // ...more
+  }
+}
+<input {...register("username")} />
+
+// > <input name="username" type="text" />
+
+
+
+
+
+
+
