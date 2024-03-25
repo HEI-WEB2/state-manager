@@ -1,46 +1,45 @@
-import {useState} from 'react';
 import {useForm, SubmitHandler} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod"
+import z from "zod";
 import './App.css'
 
-interface UserSchema {
-  username: string;
-  age: number;
-}
+const userSchema = z.object({
+  username: z.string().min(1).max(20),
+  age: z.number().gt(1).lt(500),
+  email: z.string().email(),
+});
+
+type UserSchema = z.infer<typeof userSchema>;
 
 const App = () => {
-  const {register, handleSubmit} = useForm<UserSchema>({
+  const {register, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
       username: "",
       age: 17,
       email: "example@gmail.com"
-    }
+    },
+    resolver: zodResolver(userSchema),
   });
 
-  const onSubmit: SubmitHandler = (data) => {
-    const {username, age} = data;
-    if (
-      username &&
-      username.length > 0 &&
-      username.length < 20 &&
-    ) {
-    }
-
-    if (age && age > 0 && age < 500) {
-    }
+  const onSubmit: SubmitHandler<UserSchema> = (data) => {
+    console.log('data', data);
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <input {...register("username")} />
+        <div>{errors.username?.message}</div>
       </div>
 
       <div>
-        <input {...register("age")} />
+        <input type="number" {...register("age")} />
+        <div>{errors.age?.message}</div>
       </div>
 
       <div>
-        <input {...register("email")} />
+        <input type="email" {...register("email")} />
+        <div>{errors.email?.message}</div>
       </div>
 
       <button type="submit">submit</button>
