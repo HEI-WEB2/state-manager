@@ -1,7 +1,7 @@
 import {useQuery}  from "@tanstack/react-query"
 import axios from "axios";
 
-type Data = Record<string, string>
+type Data = Record<string, string>;
 
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
