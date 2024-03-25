@@ -1,4 +1,4 @@
-import {useQuery}  from "@tanstack/react-query"
+import {useMutation, useQuery, useQueryClient}  from "@tanstack/react-query"
 import axios from "axios";
 
 type Data = Record<string, string>;
@@ -17,14 +17,19 @@ export const useGetUsers = () => {
   return {users, isFetching}
 }
 
-export const useGetPosts = () => {
-  const {data: posts = [], isFetching} = useQuery({
-    placeholderData: [],
-    queryKey: ["users"],
-    queryFn: async () => {
-      const response = await axios.get<Data[]>(BASE_URL + "/posts");
-      return response.data;
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["users"],
+    mutationFn: () => {
+      return new Promise<void>((resolve) => {
+        setTimeout(resolve, 1000 * 3);
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["users"]
+      })
     }
   });
-  return {posts, isFetching}
 }
