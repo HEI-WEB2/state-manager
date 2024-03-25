@@ -8,6 +8,9 @@ dependencies:
   '@hookform/resolvers':
     specifier: ^3.3.4
     version: 3.3.4(react-hook-form@7.51.1)
+  '@tanstack/react-query':
+    specifier: ^5.28.8
+    version: 5.28.8(react@18.2.0)
   axios:
     specifier: ^1.6.8
     version: 1.6.8
@@ -716,6 +719,19 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@tanstack/query-core@5.28.8:
+    resolution: {integrity: sha512-cx64XHeB0kvKxFt22ibvegPeOxnaWVFUbAuhXoIrb7+XePEexHWoB9Kq5n9qroNPkRwQZwgFAP9HNbQz5ohoIg==}
+    dev: false
+
+  /@tanstack/react-query@5.28.8(react@18.2.0):
+    resolution: {integrity: sha512-4XYhoRmcThqziB32HsyiBLNXJcukaeGfYwAQ+fZqUUE3ZP4oB/Zy41UJdql+TUg98+vsezfbixxAwAbGHfc5Hg==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.28.8
+      react: 18.2.0
+    dev: false
 
   /@types/babel__core@7.20.5:
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}

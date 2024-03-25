@@ -1,55 +1,12 @@
-import axios from "axios";
-import {useEffect, useState} from "react";
-
-const BASE_URL = "https://jsonplaceholder.typicode.com";
-
-type Data = Record<string, string>
+import { useGetPosts, useGetUsers } from "./hooks";
 
 export default function App() {
-  const [users, setUsers] = useState<Data[]>([]);
-  const [posts, setPosts] = useState<Data[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        // fetch
-        // axios
-        // super-agent
-        const response = await axios.get(BASE_URL + '/users')
-        setUsers(response.data);
-      } catch (e) {
-        console.error('get user: ', e);
-      }
-
-    }
-
-    const getPosts = async () => {
-      try {
-        // fetch
-        // axios
-        // super-agent
-        const response = await axios.get(BASE_URL + '/posts')
-        setPosts(response.data);
-      } catch (e) {
-        console.error('get user: ', e);
-      }
-
-
-    }
-
-    (async () => {
-      setIsLoading(true);
-      await getUsers();
-      await getPosts();
-      setIsLoading(false);
-    })()
-
-  }, []);
+  const {posts, isFetching: isFetchingPosts} = useGetPosts();
+  const {users, isFetching: isFetchingUsers} = useGetUsers();
 
   return (
     <div style={{ display: "flex", gap: 2 }}>
-      {isLoading && <h1>
+      {isFetchingUsers || isFetchingPosts && <h1>
         loading...
       </h1>}
 
