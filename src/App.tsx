@@ -1,38 +1,39 @@
-import z from "zod";
-import {useForm} from "react-hook-form";
+import { useState } from 'react';
 import './App.css'
 
 const App = () => {
-  const {register, handleSubmit} = useForm({
-    defaultValues: {
-      username: "",
-      firstname: "",
-      lastname: "",
-    }
-  })
+  const [values, setValues] = useState({
+    username: "",
+    age: 17,
+  });
 
-  const submitData = (data: any) => {
-    console.log('data', data);
+  const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const {name: field, value} = ev.target;
+    setValues(prev => ({
+      ...prev,
+      [field]: value,
+    }));
   }
 
-  // 'handleSubmit' is a middleware that handles validations and stuff
   return (
-    <form onSubmit={handleSubmit(submitData)}>
+    <form>
       <div>
-        <input type="text" {...register("username")} />
+        <input
+          name="username"
+          value={values.username}
+          onChange={handleChange}
+        />
       </div>
 
       <div>
-        <input type="text" {...register("lastname")} />
+        <input
+          name="age"
+          value={values.age}
+          onChange={handleChange}
+        />
       </div>
-
-      <div>
-        <input type="text" {...register("firstname")} />
-      </div>
-
-      <button type="submit">submit</button>
     </form>
-  )
+  );
 } 
 
 export default App

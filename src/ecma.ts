@@ -20,3 +20,33 @@ const props = {
   type: "text",
   ...register()
 }
+
+
+
+
+const obj: Record<string /* key */, string|number /* value */> = {};
+const key = "username";
+const value = "username";
+
+
+obj[key] = value;
+
+const key2 = "age";
+const value2 = 17;
+
+const obj3 = {
+  age: 17,
+  ["username"]: "username",
+  ["u" + "sername"]: "user_name"
+}
+
+const obj1 = {
+  ...obj,
+  ["sdfj"]: value2
+}
+
+
+
+
+
+
